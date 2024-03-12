@@ -14,8 +14,6 @@
 // Execute `rustlings hint hashmaps3` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
-
 use std::collections::HashMap;
 
 // A structure to store the goal details of a team.
@@ -39,6 +37,28 @@ fn build_scores_table(results: String) -> HashMap<String, Team> {
         // will be the number of goals conceded from team_2, and similarly
         // goals scored by team_2 will be the number of goals conceded by
         // team_1.
+        /*
+        这段代码用于更新两支球队的得分情况。首先，检查是否存在team_1和team_2的得分记录，如果不存在则创建一个新的Team结构体并初始化得分为0。然后分别更新两支球队的进球和失球情况。
+
+        1. 首先，检查team_1的得分记录，如果不存在则创建一个新的Team结构体并初始化得分为0。
+        2. 将team_1的进球数增加team_1_score。
+        3. 将team_1的失球数增加team_2_score。
+        4. 然后，检查team_2的得分记录，如果不存在则创建一个新的Team结构体并初始化得分为0。
+        5. 将team_2的进球数增加team_2_score。
+        6. 将team_2的失球数增加team_1_score。
+                 */
+        let team_1 = scores.entry(team_1_name.clone()).or_insert(Team {
+            goals_scored: 0,
+            goals_conceded: 0,
+        });
+        team_1.goals_scored += team_1_score;
+        team_1.goals_conceded += team_2_score;
+        let team_2 = scores.entry(team_2_name.clone()).or_insert(Team {
+            goals_scored: 0,
+            goals_conceded: 0,
+        });
+        team_2.goals_scored += team_2_score;
+        team_2.goals_conceded += team_1_score;
     }
     scores
 }

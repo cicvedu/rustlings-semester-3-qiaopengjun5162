@@ -20,8 +20,6 @@
 //
 // No hints this time!
 
-// I AM NOT DONE
-
 pub enum Command {
     Uppercase,
     Trim,
@@ -32,11 +30,29 @@ mod my_module {
     use super::Command;
 
     // TODO: Complete the function signature!
-    pub fn transformer(input: ???) -> ??? {
+    pub fn transformer(input: Vec<(String, Command)>) -> Vec<String> {
         // TODO: Complete the output declaration!
-        let mut output: ??? = vec![];
+        let mut output: Vec<String> = vec![];
         for (string, command) in input.iter() {
             // TODO: Complete the function body. You can do it!
+            match command {
+                Command::Uppercase => output.push(string.to_uppercase()),
+                Command::Trim => output.push(string.trim().to_string()),
+                Command::Append(n) => {
+                    /*
+                    这段代码的功能是将字符串"bar"重复n次并存储到一个数组中。
+
+                    这段代码的步骤解释如下：
+                    1.  `output.push()` ：将后面计算得到的值添加到数组 `output` 中。
+                    2.  `(0..*n)` ：这部分是一个迭代器，从0到n-1生成一个范围。
+                    3.  `.fold(string.to_string(), |acc, _| acc + "bar")` ：这是对前面生成的范围进行折叠操作。
+                    初始值为一个空字符串 `string.to_string()` ，
+                    然后对每个元素执行闭包操作，将当前字符串与"bar"相加并返回给下一次迭代。
+                                         */
+                    output.push((0..*n).fold(string.to_string(), |acc, _| acc + "bar"))
+                }
+                _ => output.push(string.to_string()),
+            }
         }
         output
     }
@@ -45,7 +61,7 @@ mod my_module {
 #[cfg(test)]
 mod tests {
     // TODO: What do we need to import to have `transformer` in scope?
-    use ???;
+    use super::my_module::transformer;
     use super::Command;
 
     #[test]
