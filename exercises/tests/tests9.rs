@@ -27,8 +27,14 @@
 //
 // You should NOT modify any existing code except for adding two lines of attributes.
 
-// I AM NOT DONE
-
+/// #[no_mangle] 是 Rust 中的一个属性，用于告诉编译器不要对函数进行名称混淆。
+/// 在 Rust 中，函数的名称可能会被编译器修改，以便在不同的编译器或操作系统上保持一致。
+/// 但是，某些情况下，我们可能需要保留函数的原始名称，以便其他代码可以轻松地调用它们。
+/// 在这种情况下，我们可以使用 #[no_mangle] 属性来告诉编译器不要对函数进行名称混淆。
+///
+/// 需要注意的是，#[no_mangle] 属性仅适用于 Rust 2018 edition 及更高版本。
+/// 在早期版本的 Rust 中，编译器不会对函数名称进行混淆，因此不需要使用 #[no_mangle] 属性。
+#[no_mangle]
 extern "Rust" {
     fn my_demo_function(a: u32) -> u32;
     fn my_demo_function_alias(a: u32) -> u32;
@@ -36,8 +42,14 @@ extern "Rust" {
 
 mod Foo {
     // No `extern` equals `extern "Rust"`.
-    fn my_demo_function(a: u32) -> u32 {
+    #[no_mangle]
+    pub fn my_demo_function(a: u32) -> u32 {
         a
+    }
+
+    #[no_mangle]
+    pub fn my_demo_function_alias(a: u32) -> u32 {
+        my_demo_function(a)
     }
 }
 
